@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "MStars",
+  "description": "A chrome extension for sgfe",
+  "options_page": "index.html",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "contextMenus",
+    "bookmarks"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self';object-src 'none'"
+  }
+}
