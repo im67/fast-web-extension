@@ -1,0 +1,75 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": "explicit",
+      "source.fixAll.stylelint": "explicit"
+    },
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "files.associations": {
+      "*.css": "tailwindcss"
+    },
+    "npm.packageManager": "pnpm",
+    "eslint.probe": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "html",
+      "vue",
+      "json",
+      "jsonc"
+    ],
+    "eslint.validate": [
+      "javascript",
+      "javascriptreact",
+      "typescript",
+      "typescriptreact",
+      "html",
+      "vue",
+      "json",
+      "jsonc"
+    ],
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[vue]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[css]": {
+      "editor.defaultFormatter": "stylelint.vscode-stylelint"
+    },
+    "[scss]": {
+      "editor.defaultFormatter": "sibiraj-s.vscode-scss-formatter"
+    },
+    "tailwindCSS.includeLanguages": {
+      "plaintext": "html"
+    },
+    "tailwindCSS.files.exclude": [
+      "**/.git/**",
+      "**/.hg/**",
+      "**/node_modules/**"
+    ],
+    "i18n-ally.sortKeys": true,
+    "i18n-ally.fullReloadOnChanged": true,
+    "i18n-ally.keystyle": "nested",
+    "i18n-ally.sourceLanguage": "zh-CN",
+    "i18n-ally.displayLanguage": "zh-CN",
+    "i18n-ally.pathMatcher": "{namespace}/{locale}.{ext}",
+    "i18n-ally.localesPaths": ["src/locales"],
+    "i18n-ally.enabledParsers": ["json"],
+    "i18n-ally.enabledFrameworks": ["vue", "vue-sfc"],
+    "i18n-ally.ignoreFiles": ["node_modules/**", "dist/**"],
+    "i18n-ally.dirStructure": "file"
+  }
+  

@@ -56,7 +56,10 @@
   ],
   "permissions": [
     "sidePanel",
-    "storage"
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
   ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
