@@ -12,7 +12,11 @@
     "esModuleInterop": true,
     "lib": ["ESNext", "DOM"],
     "types": ["node", "chrome"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

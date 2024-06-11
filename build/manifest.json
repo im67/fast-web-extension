@@ -59,7 +59,8 @@
     "storage",
     "activeTab",
     "tabs",
-    "scripting"
+    "scripting",
+    "<all_urls>"
   ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
