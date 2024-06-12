@@ -1,22 +1,32 @@
 <template>
-  <iframe
-    :srcdoc="releasePageDoc"
+  <div
+    class="h-full w-full"
     v-if="isNpmjsVersionPage"
-    style="border: none; width: 100%; height: 100%"
-  ></iframe>
-  <view v-else>No NPMJS</view>
+    v-loading="loading"
+    element-loading-text="加载中, 请稍后, 这和您访问github网站的速度有关"
+  >
+    <div v-for="item of list" class="mx-2 my-3">
+      <el-card :title="item.version">
+        <template #header>
+          <h3 class="text-xl font-bold">{{ item.version }}</h3>
+        </template>
+        <template #default>
+          <div v-html="item.content"></div>
+        </template>
+      </el-card>
+    </div>
+  </div>
+  <view v-else> </view>
 </template>
 
 <script setup lang="ts">
 import { NpmWebsiteNS } from '@/typings/npmjs'
 import { getCurrentActiveTab } from '@/utils/tab'
-import axios from 'axios'
+import { useRelease } from '@/hook/useRelease'
 
 const isNpmjsVersionPage = ref(false)
 
 const githubUrl = ref('')
-
-const releasePageDoc = ref('')
 
 const RELEASE_CODE = 'release'
 
@@ -32,8 +42,8 @@ const getGithubUrlFunction = async () => {
 }
 
 onMounted(async () => {
-  const { url, id = -1 } = await getCurrentActiveTab()
-  if (url === NpmWebsiteNS.VERSION_URL) {
+  const { url = '', id = -1 } = await getCurrentActiveTab()
+  if (NpmWebsiteNS.VERSION_URL_REGEXP.test(url)) {
     isNpmjsVersionPage.value = true
 
     chrome.runtime.onMessage.addListener((request) => {
@@ -53,12 +63,13 @@ onMounted(async () => {
   }
 })
 
-const wholeReleaseUrl = computed(() => githubUrl.value + '/releases')
-
-watch(wholeReleaseUrl, async (n) => {
-  if (n) {
-    const { data } = await axios.get(unref(wholeReleaseUrl))
-    releasePageDoc.value = data
-  }
+watch(githubUrl, (n) => {
+  url.value = n
 })
+
+const { page, url, list, loading } = useRelease({ url: githubUrl.value, page: 1 })
 </script>
+
+<style lang="scss">
+@import '@/styles/markdown.scss';
+</style>

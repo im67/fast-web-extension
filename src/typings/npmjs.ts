@@ -1,3 +1,3 @@
 export namespace NpmWebsiteNS {
-  export var VERSION_URL = 'https://www.npmjs.com/package/pnpm?activeTab=versions'
+  export const VERSION_URL_REGEXP = /https:\/\/www.npmjs.com\/package\/.+\?activeTab=versions/
 }

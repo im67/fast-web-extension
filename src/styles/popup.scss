@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  width: 350px;
+  height: 450px;
+  overflow: auto;
+  font-size: 14px;
+}
+
+#app {
+  height: 100%;
+  width: 100%;
+}
+

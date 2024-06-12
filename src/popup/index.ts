@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-import '@/styles/popup.css'
+import '@/styles/popup.scss'
 import Popup from './Popup.vue'
 import route from '../router/route'
 
