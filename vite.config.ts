@@ -27,7 +27,7 @@ export default defineConfig(({ mode }) => {
       vue(),
       AutoImport({
         include: [/\.[tj]sx?$/, /\.vue$/, /\.vue\?vue/, /\.md$/],
-        imports: ['vue', 'vue-router'],
+        imports: ['vue', 'vue-router', 'vue-i18n'],
         eslintrc: {
           enabled: false,
           filepath: './.eslintrc-auto-import.json',
@@ -48,6 +48,9 @@ export default defineConfig(({ mode }) => {
           replacement: `${resolve(__dirname, 'src')}/`,
         },
       ],
+    },
+    define: {
+      __INTLIFY_JIT_COMPILATION__: true,
     },
   }
 })

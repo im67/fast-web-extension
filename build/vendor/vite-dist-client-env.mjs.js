@@ -13,7 +13,7 @@ const context = (() => {
     }
 })();
 // assign defines
-const defines = {"__VUE_OPTIONS_API__": true, "__VUE_PROD_DEVTOOLS__": false, "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": false, };
+const defines = {"__INTLIFY_JIT_COMPILATION__": true, "__VUE_OPTIONS_API__": true, "__VUE_PROD_DEVTOOLS__": false, "__VUE_PROD_HYDRATION_MISMATCH_DETAILS__": false, };
 Object.keys(defines).forEach((key) => {
     const segments = key.split('.');
     let target = context;

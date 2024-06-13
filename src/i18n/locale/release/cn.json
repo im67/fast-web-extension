@@ -1,0 +1,8 @@
+{
+  "release": {
+    "tips": {
+      "loading": "加载中, 请稍后, 这和您访问github网站的速度有关",
+      "popup": "插件运行中, 你可以在NPM对应包的网页找到 version Tab, 进入后对应版本号后会有log按钮, 点击可以快速获得到该版本的release log."
+    }
+  }
+}

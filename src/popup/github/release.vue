@@ -1,73 +1,50 @@
 <template>
   <div
-    class="h-full w-full"
-    v-if="isNpmjsVersionPage"
-    v-loading="loading"
-    element-loading-text="加载中, 请稍后, 这和您访问github网站的速度有关"
+    class="h-full w-full overflow-auto"
+    v-if="version && url"
+    v-loading.body="loading"
+    :element-loading-text="$t('release.tips.loading')"
   >
-    <div v-for="item of list" class="mx-2 my-3">
-      <el-card :title="item.version">
+    <div class="mx-2 my-3">
+      <el-card>
         <template #header>
-          <h3 class="text-xl font-bold">{{ item.version }}</h3>
+          <h3 class="text-xl font-bold">{{ version }}</h3>
         </template>
         <template #default>
-          <div v-html="item.content"></div>
+          <div v-html="data.content"></div>
         </template>
       </el-card>
     </div>
   </div>
-  <view v-else> </view>
+  <div v-else class="flex flex-col items-center justify-center p-4 text-center">
+    <div>
+      <el-icon :size="40" class="is-loading" color="#67C23A"><Tools /></el-icon>
+    </div>
+    <div class="text-base leading-7">{{ $t('release.tips.popup') }}</div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { NpmWebsiteNS } from '@/typings/npmjs'
-import { getCurrentActiveTab } from '@/utils/tab'
 import { useRelease } from '@/hook/useRelease'
-
-const isNpmjsVersionPage = ref(false)
+import { Tools } from '@element-plus/icons-vue'
 
 const githubUrl = ref('')
+const versionRef = ref('')
 
-const RELEASE_CODE = 'release'
-
-const getGithubUrlFunction = async () => {
-  const RELEASE_CODE = 'release'
-  const aEl: HTMLAnchorElement | null = document.querySelector(
-    "a[aria-labelledby='repository repository-link']",
-  )
-  if (aEl) {
-    const url = aEl.href
-    await chrome.runtime.sendMessage({ code: RELEASE_CODE, data: { url } })
-  }
-}
-
-onMounted(async () => {
-  const { url = '', id = -1 } = await getCurrentActiveTab()
-  if (NpmWebsiteNS.VERSION_URL_REGEXP.test(url)) {
-    isNpmjsVersionPage.value = true
-
-    chrome.runtime.onMessage.addListener((request) => {
-      const {
-        code,
-        data: { url },
-      } = request
-      if (code === RELEASE_CODE) {
-        githubUrl.value = url
-      }
-    })
-    // get the Github url
-    chrome.scripting.executeScript({
-      target: { tabId: id },
-      func: getGithubUrlFunction,
-    })
-  }
+onMounted(() => {
+  const {
+    query: { version: gitVersion, url: gitUrl },
+  } = useRoute()
+  url.value = gitUrl as string
+  version.value = gitVersion as string
 })
 
-watch(githubUrl, (n) => {
-  url.value = n
+const { version, url, data, loading } = useRelease({
+  url: githubUrl.value,
+  version: versionRef.value,
 })
 
-const { page, url, list, loading } = useRelease({ url: githubUrl.value, page: 1 })
+watch(data, () => {}, {})
 </script>
 
 <style lang="scss">

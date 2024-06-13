@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 interface HookParams {
-  page: number
+  version: string
   url: string
 }
 
@@ -9,28 +9,24 @@ const generateReleaseList = (html: string) => {
   const host = document.createElement('div')
   const shadowRoot = host.attachShadow({ mode: 'closed' })
   shadowRoot.innerHTML = html
-  const list = shadowRoot.querySelectorAll('.Box-body')
-  return Array.from(list).map((node) => {
-    const version = node.querySelector('.Link--primary.Link')?.textContent ?? ''
-    const content = node.querySelector('.markdown-body')?.innerHTML
-    return {
-      version,
-      content,
-    }
-  })
+  const cardBodyEl = shadowRoot.querySelector('.Box-body')
+  const version = cardBodyEl?.querySelector('.d-flex h1')?.textContent ?? ''
+  const content = cardBodyEl?.querySelector('.markdown-body')?.innerHTML
+  return {
+    version,
+    content,
+  }
 }
 
 export const useRelease = (opts: HookParams) => {
-  const { page = 1, url } = opts
+  const { version, url } = opts
 
-  const pageRef = ref(page)
+  const versionRef = ref(version)
   const pageUrlRef = ref(url)
   const loading = ref(false)
-  const list = ref<any>(null)
+  const dataRef = ref<any>({ content: '' })
 
-  const wholeReleaseUrl = computed(
-    () => `${pageUrlRef.value}/releases?expanded=true&page=${pageRef.value}`,
-  )
+  const wholeReleaseUrl = computed(() => `${pageUrlRef.value}/releases/tag/v${versionRef.value}`)
 
   const fetch = async () => {
     loading.value = true
@@ -38,7 +34,8 @@ export const useRelease = (opts: HookParams) => {
     const { data } = await axios.get(unref(wholeReleaseUrl))
     console.log('=====fetch the page end======')
     const value = generateReleaseList(data)
-    list.value = value
+    console.log(value)
+    dataRef.value = value
     loading.value = false
   }
 
@@ -46,8 +43,8 @@ export const useRelease = (opts: HookParams) => {
 
   return {
     url: pageUrlRef,
-    page: pageRef,
-    list,
+    version: versionRef,
+    data: dataRef,
     loading,
   }
 }
